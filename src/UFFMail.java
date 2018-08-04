@@ -5,9 +5,8 @@ import java.io.IOException;
 
 public class UFFMail {
 
-    public static Aluno Create(String Path, String matricula){
+    public static Aluno SearchMatricula(String Path, String matricula){
         try {
-
             FileReader file = new FileReader(Path);
             BufferedReader readFile = new BufferedReader(file);
 
@@ -32,8 +31,25 @@ public class UFFMail {
             }
 
         } catch (FileNotFoundException ex) {
-            System.out.println("Erro: UFFMail não encontrado!");
+            System.out.println("Erro: Arquivo não encontrado!");
             return null;
         }
+    }
+
+    public static Aluno CreateUFFMail(Aluno a) {
+
+        if (a.getUffmail().equals("")){
+            System.out.println("Aluno não tem UFFMail.");
+            if (!a.getStatus()) {
+                System.out.println("Aluno Inativo, não é possível criar o UFFMail.");
+                return a;
+            }
+            /*
+                Produção das opções aqui
+            */
+            return a;
+        }
+        System.out.println("Aluno Ativo, mas já tem UFFMail.");
+        return a;
     }
 }
