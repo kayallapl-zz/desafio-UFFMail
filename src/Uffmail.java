@@ -65,7 +65,44 @@ public class Uffmail {
         }
     }
 
-    public static Aluno CriarUFFMail(Aluno a) {
+    private static String[] GerarOpcoes(String caminho, Aluno a){
+        String nome = a.getNome();
+        String[] nomeSeparado = nome.split(" ");
+        String listadeuffmails = UffmailsExistentes(caminho);
+        String emails = "";
+
+        String opcao = nomeSeparado[0].toLowerCase() + "_" + nomeSeparado[nomeSeparado.length - 1].toLowerCase() + "@id.uff.br";
+        if (!(listadeuffmails.contains(opcao)))
+            emails += opcao + ",";
+
+        opcao = nomeSeparado[0].toLowerCase() + "" + nomeSeparado[1].substring(0, 1).toLowerCase() + "" + nomeSeparado[2].substring(0, 1).toLowerCase() + "@id.uff.br";
+        if (!(listadeuffmails.contains(opcao)))
+            emails += opcao + ",";
+
+        opcao = nomeSeparado[0].toLowerCase() + "." + nomeSeparado[1].toLowerCase() + "@id.uff.br";
+        if (!(listadeuffmails.contains(opcao)))
+            emails += opcao + ",";
+
+        opcao = nomeSeparado[0].toLowerCase() + "" + nomeSeparado[1].toLowerCase() + "" + nomeSeparado[2].toLowerCase() + "@id.uff.br";
+        if (!(listadeuffmails.contains(opcao)))
+            emails += opcao + ",";
+
+        opcao = nomeSeparado[0].substring(0, 1).toLowerCase() + "" + nomeSeparado[1].substring(0, 1).toLowerCase() + "" + nomeSeparado[2].toLowerCase() + "@id.uff.br";
+        if (!(listadeuffmails.contains(opcao)))
+            emails += opcao + ",";
+
+        opcao = nomeSeparado[2].toLowerCase() + "" + nomeSeparado[0].toLowerCase() + "@id.uff.br";
+        if (!(listadeuffmails.contains(opcao)))
+            emails += opcao + ",";
+
+        String[] lista = emails.split(",");
+        for (int i=0; i<lista.length; i++){
+            System.out.println(lista[i]);
+        }
+        return lista;
+    }
+
+    public static Aluno CriarUFFMail(String caminho, Aluno a) {
 
         if (a.getUffmail().equals("")){
             System.out.println("Aluno não tem Uffmail.");
@@ -73,9 +110,8 @@ public class Uffmail {
                 System.out.println("Aluno Inativo, não é possível criar o Uffmail.");
                 return a;
             }
-            /*
-                Produção das opções aqui
-            */
+            String[] opcoes = GerarOpcoes(caminho, a);
+
             return a;
         }
         System.out.println("Aluno Ativo, mas já tem Uffmail.");
