@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Uffmail {
 
@@ -36,7 +37,7 @@ public class Uffmail {
         }
     }
 
-    public static String UffmailsExistentes(String caminho){
+    private static String UffmailsExistentes(String caminho){
         try {
             FileReader arquivo = new FileReader(caminho);
             BufferedReader lerArquivo = new BufferedReader(arquivo);
@@ -96,25 +97,32 @@ public class Uffmail {
             emails += opcao + ",";
 
         String[] lista = emails.split(",");
-        for (int i=0; i<lista.length; i++){
-            System.out.println(lista[i]);
-        }
+
         return lista;
     }
 
-    public static Aluno CriarUFFMail(String caminho, Aluno a) {
+    public static void CriarUFFMail(String caminho, Aluno a) {
 
         if (a.getUffmail().equals("")){
-            System.out.println("Aluno não tem Uffmail.");
             if (!a.getStatus()) {
                 System.out.println("Aluno Inativo, não é possível criar o Uffmail.");
-                return a;
+                return;
             }
+            Scanner teclado = new Scanner(System.in);
             String[] opcoes = GerarOpcoes(caminho, a);
 
-            return a;
+            System.out.println(a.getNome().split(" ")[0] + ", por favor escolha uma das opções abaixo para o seu UFFMail: ");
+            for (int i=0; i<opcoes.length; i++){
+                System.out.println(i+1 + " - " + opcoes[i]);
+            }
+            int escolhido = teclado.nextInt() - 1;
+            teclado.close();
+            a.setUffmail(opcoes[escolhido]);
+
+            return;
         }
-        System.out.println("Aluno Ativo, mas já tem Uffmail.");
-        return a;
+        System.out.println("Seu Uffmail é " + a.getUffmail() + ".");
+        return;
     }
+
 }
