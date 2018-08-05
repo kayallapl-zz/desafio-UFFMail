@@ -117,7 +117,7 @@ public class Uffmail {
                     else status = "Inativo";
                     pw.println(a.getNome() + "," + a.getMatricula() + "," + a.getTelefone() + "," + a.getEmail() + "," + a.getUffmail() + "," + status);
                 }else{
-                    pw.print(linha);
+                    pw.print(linha + "\n");
                 }
             }
             x.close();
