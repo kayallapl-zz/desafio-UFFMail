@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Uffmail {
@@ -101,6 +98,42 @@ public class Uffmail {
         return lista;
     }
 
+    public static void Reescrever(String caminho, Aluno a){
+        String temp = "temp.csv";
+        File arquivo = new File(caminho);
+        File novoarquivo = new File(temp);
+        try{
+            FileWriter fw = new FileWriter(temp, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            Scanner x = new Scanner(new File(caminho));
+            String status = "";
+            x.useDelimiter("[\n]");
+            while(x.hasNext()){
+                String linha = x.next();
+                String[] conteudo = linha.split(",");
+                if(a.getMatricula().equals(conteudo[1])) {
+                    if (a.getStatus()) status = "Ativo";
+                    else status = "Inativo";
+                    pw.println(a.getNome() + "," + a.getMatricula() + "," + a.getTelefone() + "," + a.getEmail() + "," + a.getUffmail() + "," + status);
+                }else{
+                    pw.print(linha);
+                }
+            }
+            x.close();
+            pw.close();
+            arquivo.delete();
+            File novo = new File("alunos.csv");
+            novoarquivo.renameTo(novo);
+            return;
+
+        } catch (IOException ex) {
+            System.out.println("Erro: Não foi possível ler o arquivo!");
+            return;
+        }
+
+    }
+
     public static void CriarUFFMail(String caminho, Aluno a) {
 
         if (a.getUffmail().equals("")){
@@ -118,7 +151,9 @@ public class Uffmail {
             int escolhido = teclado.nextInt() - 1;
             teclado.close();
             a.setUffmail(opcoes[escolhido]);
-
+            Reescrever(caminho, a);
+            System.out.println("A criação de seu e-mail ("+a.getUffmail()+") será feita nos próximos minutos.");
+            System.out.println("Um SMS foi enviado para "+a.getTelefone()+" com a sua senha de acesso.");
             return;
         }
         System.out.println("Seu Uffmail é " + a.getUffmail() + ".");
