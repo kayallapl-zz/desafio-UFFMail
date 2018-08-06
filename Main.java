@@ -8,8 +8,8 @@ public class Main {
         Scanner teclado = new Scanner(System.in);
         System.out.println("Digite sua matrícula: ");
         String matricula = teclado.next();
-        Aluno aluno = Uffmail.ProcuraMatricula(file, matricula);
+        Aluno aluno = Uffmail.procuraMatricula(file, matricula);
         if(aluno != null)
-            Uffmail.CriarUFFMail(file, aluno);
+            Uffmail.criarUFFMail(file, aluno);
     }
 }

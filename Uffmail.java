@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Uffmail {
 
-    public static Aluno ProcuraMatricula(String caminho, String matricula){
+    public static Aluno procuraMatricula(String caminho, String matricula){
         try {
             FileReader arquivo = new FileReader(caminho);
             BufferedReader lerArquivo = new BufferedReader(arquivo);
@@ -34,7 +34,7 @@ public class Uffmail {
         }
     }
 
-    private static String UffmailsExistentes(String caminho){
+    private static String uffmailsExistentes(String caminho){
         try {
             FileReader arquivo = new FileReader(caminho);
             BufferedReader lerArquivo = new BufferedReader(arquivo);
@@ -63,10 +63,10 @@ public class Uffmail {
         }
     }
 
-    private static String[] GerarOpcoes(String caminho, Aluno a){
+    private static String[] gerarOpcoes(String caminho, Aluno a){
         String nome = a.getNome();
         String[] nomeSeparado = nome.split(" ");
-        String listadeuffmails = UffmailsExistentes(caminho);
+        String listadeuffmails = uffmailsExistentes(caminho);
         String emails = "";
 
         String opcao = nomeSeparado[0].toLowerCase() + "_" + nomeSeparado[nomeSeparado.length - 1].toLowerCase() + "@id.uff.br";
@@ -98,7 +98,7 @@ public class Uffmail {
         return lista;
     }
 
-    public static void Reescrever(String caminho, Aluno a){
+    public static void reescrever(String caminho, Aluno a){
         String temp = "temp.csv";
         File arquivo = new File(caminho);
         File novoarquivo = new File(temp);
@@ -134,7 +134,7 @@ public class Uffmail {
 
     }
 
-    public static void CriarUFFMail(String caminho, Aluno a) {
+    public static void criarUFFMail(String caminho, Aluno a) {
 
         if (a.getUffmail().equals("")){
             if (!a.getStatus()) {
@@ -142,7 +142,7 @@ public class Uffmail {
                 return;
             }
             Scanner teclado = new Scanner(System.in);
-            String[] opcoes = GerarOpcoes(caminho, a);
+            String[] opcoes = gerarOpcoes(caminho, a);
 
             System.out.println(a.getNome().split(" ")[0] + ", por favor escolha uma das opções abaixo para o seu UFFMail: ");
             for (int i=0; i<opcoes.length; i++){
@@ -151,7 +151,7 @@ public class Uffmail {
             int escolhido = teclado.nextInt() - 1;
             teclado.close();
             a.setUffmail(opcoes[escolhido]);
-            Reescrever(caminho, a);
+            reescrever(caminho, a);
             System.out.println("A criação de seu e-mail ("+a.getUffmail()+") será feita nos próximos minutos.");
             System.out.println("Um SMS foi enviado para "+a.getTelefone()+" com a sua senha de acesso.");
             return;
